@@ -3,12 +3,17 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:touchable/touchable.dart';
 
+import 'location_info_dialog.dart';
+import 'model.dart';
+
 class MapCanvas extends CustomPainter {
   final BuildContext context;
   final ui.Image image;
+  final MapCoordinates mapCoordinates;
   const MapCanvas(
     this.context,
     this.image,
+    this.mapCoordinates,
   );
 
   @override
@@ -18,29 +23,18 @@ class MapCanvas extends CustomPainter {
 
     drawImage(myCanvas, size);
     drawFrame(myCanvas, offset, size);
+    drawFirstCoordinates(myCanvas, size);
   }
 
   void drawFrame(TouchyCanvas canvas, Offset offset, Size size) {
     var rect =
         Rect.fromCenter(center: offset, width: size.width, height: size.height);
     var frame = Paint()
-      ..color = Color.fromARGB(255, 174, 116, 116)
-      ..strokeWidth = 16.0
+      ..color = ui.Color.fromARGB(255, 155, 76, 100)
+      ..strokeWidth = 24.0
       ..style = PaintingStyle.fill
       ..style = PaintingStyle.stroke;
     canvas.drawRect(rect, frame);
-    // var rectFill =
-    //     Rect.fromCenter(center: offset, width: size.width, height: size.height);
-    // var frameFill = Paint()
-    //   ..color = ui.Color.fromARGB(56, 174, 116, 116)
-    //   ..strokeWidth = 16.0
-    //   ..style = PaintingStyle.fill;
-    // canvas.drawRect(
-    //   rectFill,
-    //   frameFill,
-    //   onTapDown: (details) =>
-    //       print('FrameAddElement: ${details.localPosition}'),
-    // );
 
     var rectTop = Rect.fromLTWH(8, 8, 120, 80);
     var frame3 = Paint()
@@ -63,6 +57,50 @@ class MapCanvas extends CustomPainter {
       paint,
       onTapDown: (details) => print('ImageTap: ${details.localPosition}'),
     );
+  }
+
+  void drawFirstCoordinates(TouchyCanvas canvas, Size size) {
+    var paint1 = Paint()
+      ..color = ui.Color.fromARGB(148, 170, 68, 170)
+      ..style = PaintingStyle.fill;
+
+    for (var coordinate in mapCoordinates.locations) {
+      if (!coordinate.show) return;
+
+      canvas.drawCircle(
+          Offset(
+            coordinate.x,
+            coordinate.y,
+          ),
+          50,
+          paint1, onTapDown: (details) {
+        print(
+            'Tap ${coordinate.name} (${coordinate.id}): ${details.localPosition}');
+        showAlertDialog(coordinate, context);
+      });
+    }
+  }
+
+  void drawNewCoordinate(TouchyCanvas canvas, Size size) {
+    var paint1 = Paint()
+      ..color = ui.Color.fromARGB(148, 170, 68, 170)
+      ..style = PaintingStyle.fill;
+
+    for (var coordinate in mapCoordinates.locations) {
+      if (!coordinate.show) return;
+
+      canvas.drawCircle(
+          Offset(
+            coordinate.x,
+            coordinate.y,
+          ),
+          50,
+          paint1, onTapDown: (details) {
+        print(
+            'Tap ${coordinate.name} (${coordinate.id}): ${details.localPosition}');
+        showAlertDialog(coordinate, context);
+      });
+    }
   }
 
   @override
