@@ -14,11 +14,14 @@ class MyApp extends StatelessWidget {
       title: 'Flutter game world map Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        brightness: Brightness.dark,
       ),
       home: const MyHomePage(),
     );
   }
 }
+
+const String mapPath = 'assets/mapa';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -31,7 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return const MapPainter(
-      imagePath: 'assets/mapa.jpg',
+      imagePath: '$mapPath.jpg',
+      mapJsonPath: '$mapPath.json',
     );
   }
 }

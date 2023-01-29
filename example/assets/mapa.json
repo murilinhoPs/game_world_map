@@ -1,0 +1,62 @@
+{
+    "id": 0,
+    "name": "Raccoon's Site RPG",
+    "locations": [
+        {
+            "id": "1",
+            "name": "Mata Densa",
+            "description": "Pouco para se ver, mas muitos barulhos estranhos...",
+            "x": 1707.2,
+            "y": 623.8,
+            "show": true
+        },
+        {
+            "id": "2",
+            "name": "Observatório",
+            "description": "Da pra ver o topo das Montanhas daqui!",
+            "x": 1045.0,
+            "y": 856.0,
+            "show": true
+        },
+        {
+            "id": "3",
+            "name": "Caverna",
+            "description": "Escuro demais, mas a curiosidade pode recompensar... ou nao",
+            "x": 2138.0,
+            "y": 498.0,
+            "show": true
+        },
+        {
+            "id": "4",
+            "name": "Chalés Sinistros",
+            "description": "Eles sao sinistros, nao tem mais o que dizer",
+            "x": 805.0,
+            "y": 829.0,
+            "show": true
+        },
+        {
+            "id": "5",
+            "name": "Montanhas",
+            "description": "Geladas, mas pelo menos tem uma bela vista!",
+            "x": 647.0,
+            "y": 407.0,
+            "show": true
+        },
+        {
+            "id": "6",
+            "name": "Rio",
+            "description": "Da pra encher o Cantil aqui, só cuidado com os jacarés",
+            "x": 485,
+            "y": 1018,
+            "show": true
+        },
+        {
+            "id": "Você",
+            "name": "Sua localização",
+            "description": "É onde fica seu acampamento",
+            "x": 1429,
+            "y": 117,
+            "show": false
+        }
+    ]
+}
