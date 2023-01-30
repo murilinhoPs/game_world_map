@@ -57,6 +57,14 @@
             "x": 1429,
             "y": 117,
             "show": false
+        },
+        {
+            "id": "Random",
+            "name": "Random place",
+            "description": "hdsufuhdasifdhifhaifd",
+            "x": 1100,
+            "y": 567,
+            "show": false
         }
     ]
 }
