@@ -4,16 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:touchable/touchable.dart';
 
 import 'location_info_dialog.dart';
+import 'map_painter_controller.dart';
 import 'model.dart';
 
 class MapCanvas extends CustomPainter {
   final BuildContext context;
   final ui.Image image;
   final MapCoordinates mapCoordinates;
+  final MapPainterController controller;
   const MapCanvas(
     this.context,
     this.image,
     this.mapCoordinates,
+    this.controller,
   );
 
   @override
@@ -24,6 +27,7 @@ class MapCanvas extends CustomPainter {
     drawImage(myCanvas, size);
     drawFrame(myCanvas, offset, size);
     drawFirstCoordinates(myCanvas, size);
+    drawNewCoordinate(myCanvas, size);
   }
 
   void drawFrame(TouchyCanvas canvas, Offset offset, Size size) {
@@ -86,21 +90,20 @@ class MapCanvas extends CustomPainter {
       ..color = ui.Color.fromARGB(148, 170, 68, 170)
       ..style = PaintingStyle.fill;
 
-    for (var coordinate in mapCoordinates.locations) {
-      if (!coordinate.show) return;
-
-      canvas.drawCircle(
-          Offset(
-            coordinate.x,
-            coordinate.y,
-          ),
-          50,
-          paint1, onTapDown: (details) {
+    if (!controller.location.show) return;
+    canvas.drawCircle(
+      Offset(
+        controller.location.x,
+        controller.location.y,
+      ),
+      50,
+      paint1,
+      onTapDown: (details) {
         print(
-            'Tap ${coordinate.name} (${coordinate.id}): ${details.localPosition}');
-        showAlertDialog(coordinate, context);
-      });
-    }
+            'Tap ${controller.location.name} (${controller.location.id}): ${details.localPosition}');
+        showAlertDialog(controller.location, context);
+      },
+    );
   }
 
   @override

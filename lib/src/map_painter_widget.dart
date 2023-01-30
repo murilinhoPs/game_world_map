@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:touchable/touchable.dart';
 
 import 'map_canvas.dart';
+import 'map_painter_controller.dart';
 import 'model.dart';
 import 'move_map_gesture.dart';
 
@@ -25,6 +26,7 @@ class MapPainter extends StatefulWidget {
 class _MapPainterState extends State<MapPainter> {
   late ui.Image image;
   late MapCoordinates mapCoordinates;
+  final MapPainterController controller = MapPainterController();
 
   Future loadImage(String path) async {
     final data = await rootBundle.load(path);
@@ -50,13 +52,15 @@ class _MapPainterState extends State<MapPainter> {
   }
 
   void addNewCoordinate(String id) {
-    mapCoordinates.locations
-        .firstWhere(
-          (element) => element.id == id,
-        )
-        .show = true;
+    final show = mapCoordinates.locations.firstWhere((element) {
+      final correctLocation = element.id == id;
+      if (correctLocation) {
+        controller.setNewLocation(element);
+      }
+      return correctLocation;
+    }).show = true;
 
-    setState(() {});
+    controller.showNewLocation(show);
   }
 
   @override
@@ -96,6 +100,7 @@ class _MapPainterState extends State<MapPainter> {
                               context,
                               image,
                               mapCoordinates,
+                              controller,
                             ),
                           );
                         },
