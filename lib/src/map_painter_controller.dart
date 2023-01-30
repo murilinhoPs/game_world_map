@@ -3,16 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'model.dart';
 
 class MapPainterController extends ChangeNotifier {
-  late Location? location;
-
-  void showNewLocation(bool showLocation) {
-    if (location == null) return;
-    location!.show = showLocation;
-    notifyListeners();
-  }
+  List<Location>? locations = [];
 
   void setNewLocation(Location newLocation) {
-    location = newLocation;
+    if (locations!.contains(newLocation)) {
+      return;
+    }
+    locations!.add(newLocation);
     notifyListeners();
   }
 }
