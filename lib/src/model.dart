@@ -24,9 +24,7 @@ class MapCoordinates {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['name'] = name;
-    if (locations != null) {
-      data['locations'] = locations.map((v) => v.toJson()).toList();
-    }
+    data['locations'] = locations.map((v) => v.toJson()).toList();
     return data;
   }
 }
