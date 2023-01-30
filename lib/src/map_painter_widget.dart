@@ -99,7 +99,9 @@ class _MapPainterState extends State<MapPainter> {
           future: futureInit,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return Center(
+              return Container(
+                alignment: Alignment.center,
+                padding: const EdgeInsets.all(8.0),
                 child: FittedBox(
                   child: SizedBox(
                     width: image.width.toDouble(),
@@ -117,6 +119,7 @@ class _MapPainterState extends State<MapPainter> {
                           sigmaY: 5.0,
                         ),
                         child: Container(
+                          padding: const EdgeInsets.all(12.0),
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: const Color.fromARGB(255, 115, 37, 60),
