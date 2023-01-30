@@ -90,18 +90,20 @@ class MapCanvas extends CustomPainter {
       ..color = ui.Color.fromARGB(148, 170, 68, 170)
       ..style = PaintingStyle.fill;
 
-    if (!controller.location.show) return;
+    if (controller.location == null) return;
+    if (!controller.location!.show) return;
+
     canvas.drawCircle(
       Offset(
-        controller.location.x,
-        controller.location.y,
+        controller.location!.x,
+        controller.location!.y,
       ),
       50,
       paint1,
       onTapDown: (details) {
         print(
-            'Tap ${controller.location.name} (${controller.location.id}): ${details.localPosition}');
-        showAlertDialog(controller.location, context);
+            'Tap ${controller.location!.name} (${controller.location!.id}): ${details.localPosition}');
+        showAlertDialog(controller.location!, context);
       },
     );
   }
