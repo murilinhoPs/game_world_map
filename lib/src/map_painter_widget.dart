@@ -27,6 +27,7 @@ class MapPainter extends StatefulWidget {
 
 class _MapPainterState extends State<MapPainter> {
   int coordinateCount = 0;
+  bool isFullscreen = false;
   late ui.Image image;
   late Uint8List imageBytes;
   late MapCoordinates mapCoordinates;
@@ -82,74 +83,100 @@ class _MapPainterState extends State<MapPainter> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        leading: coordinateCount > 1
-            ? null
-            : IconButton(
-                onPressed: () {
-                  var id = coordinateCount > 0 ? 'Random' : 'Você';
-                  addNewCoordinate(id);
-                  setState(() => coordinateCount++);
-                },
-                icon: const Icon(Icons.add_box),
-              ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => setState(() {
+          isFullscreen = !isFullscreen;
+
+          !isFullscreen
+              ? SystemChrome.setPreferredOrientations(
+                  [DeviceOrientation.portraitUp])
+              : SystemChrome.setPreferredOrientations(
+                  [DeviceOrientation.landscapeRight]);
+        }),
+        child: !isFullscreen
+            ? const Icon(Icons.open_in_full_rounded)
+            : const Icon(Icons.close_fullscreen_rounded),
       ),
-      body: FutureBuilder(
-          future: futureInit,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(8.0),
-                child: FittedBox(
-                  child: SizedBox(
-                    width: image.width.toDouble(),
-                    height: image.height.toDouble(),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: MemoryImage(imageBytes),
-                          opacity: 0.7,
-                        ),
-                      ),
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(
-                          sigmaX: 5.0,
-                          sigmaY: 5.0,
-                        ),
+      body: Stack(
+        children: [
+          FutureBuilder(
+              future: futureInit,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Container(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.all(8.0),
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: FittedBox(
+                      fit: BoxFit.cover,
+                      clipBehavior: Clip.none,
+                      child: SizedBox(
+                        width: image.width.toDouble(),
+                        height: image.height.toDouble(),
                         child: Container(
-                          padding: const EdgeInsets.all(12.0),
                           decoration: BoxDecoration(
-                            border: Border.all(
-                              color: const Color.fromARGB(255, 115, 37, 60),
-                              width: 20.0,
+                            image: DecorationImage(
+                              image: MemoryImage(imageBytes),
+                              opacity: 0.7,
                             ),
                           ),
-                          child: MoveMapGesture(
-                            child: CanvasTouchDetector(
-                              gesturesToOverride: const [GestureType.onTapDown],
-                              builder: (context) {
-                                return CustomPaint(
-                                  painter: MapCanvas(
-                                    context,
-                                    image,
-                                    controller,
-                                  ),
-                                );
-                              },
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(
+                              sigmaX: 5.0,
+                              sigmaY: 5.0,
+                            ),
+                            child: Container(
+                              padding: const EdgeInsets.all(12.0),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: const Color.fromARGB(255, 115, 37, 60),
+                                  width: 20.0,
+                                ),
+                              ),
+                              child: MoveMapGesture(
+                                child: CanvasTouchDetector(
+                                  gesturesToOverride: const [
+                                    GestureType.onTapDown
+                                  ],
+                                  builder: (context) {
+                                    return CustomPaint(
+                                      painter: MapCanvas(
+                                        context,
+                                        image,
+                                        controller,
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-              );
-            }
+                  );
+                }
 
-            return const Center(child: CircularProgressIndicator());
-          }),
+                return const Center(child: CircularProgressIndicator());
+              }),
+          SafeArea(
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: coordinateCount > 1
+                  ? null
+                  : IconButton(
+                      onPressed: () {
+                        var id = coordinateCount > 0 ? 'Random' : 'Você';
+                        addNewCoordinate(id);
+                        setState(() => coordinateCount++);
+                      },
+                      icon: const Icon(Icons.add_box),
+                    ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
