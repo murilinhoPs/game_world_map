@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,7 +9,9 @@ import 'package:touchable/touchable.dart';
 import 'map_canvas.dart';
 import 'map_painter_controller.dart';
 import 'model.dart';
-import 'move_map_gesture.dart';
+import 'widgets/blurred_image.dart';
+import 'widgets/map_border.dart';
+import 'widgets/move_map_gesture.dart';
 
 class MapPainter extends StatefulWidget {
   final String imagePath;
@@ -82,6 +83,8 @@ class _MapPainterState extends State<MapPainter> {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () => setState(() {
@@ -106,49 +109,30 @@ class _MapPainterState extends State<MapPainter> {
                   return Container(
                     alignment: Alignment.center,
                     padding: const EdgeInsets.all(8.0),
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
+                    width: screenSize.width,
+                    height: screenSize.height,
                     child: FittedBox(
                       fit: BoxFit.cover,
-                      clipBehavior: Clip.none,
                       child: SizedBox(
                         width: image.width.toDouble(),
                         height: image.height.toDouble(),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: MemoryImage(imageBytes),
-                              opacity: 0.7,
-                            ),
-                          ),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(
-                              sigmaX: 5.0,
-                              sigmaY: 5.0,
-                            ),
-                            child: Container(
-                              padding: const EdgeInsets.all(12.0),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: const Color.fromARGB(255, 115, 37, 60),
-                                  width: 20.0,
-                                ),
-                              ),
-                              child: MoveMapGesture(
-                                child: CanvasTouchDetector(
-                                  gesturesToOverride: const [
-                                    GestureType.onTapDown
-                                  ],
-                                  builder: (context) {
-                                    return CustomPaint(
-                                      painter: MapCanvas(
-                                        context,
-                                        image,
-                                        controller,
-                                      ),
-                                    );
-                                  },
-                                ),
+                        child: BlurredImage(
+                          imageBytes: imageBytes,
+                          child: MapBorder(
+                            child: MoveMapGesture(
+                              child: CanvasTouchDetector(
+                                gesturesToOverride: const [
+                                  GestureType.onTapDown
+                                ],
+                                builder: (context) {
+                                  return CustomPaint(
+                                    painter: MapCanvas(
+                                      context,
+                                      image,
+                                      controller,
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           ),
