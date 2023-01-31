@@ -13,6 +13,8 @@ import 'widgets/blurred_image.dart';
 import 'widgets/map_border.dart';
 import 'widgets/move_map_gesture.dart';
 
+const testAB = true;
+
 class MapPainter extends StatefulWidget {
   final String imagePath;
   final String mapJsonPath;
@@ -83,10 +85,10 @@ class _MapPainterState extends State<MapPainter> {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
       floatingActionButton: FloatingActionButton(
+        mini: true,
         onPressed: () => setState(() {
           isFullscreen = !isFullscreen;
           !isFullscreen
@@ -96,8 +98,14 @@ class _MapPainterState extends State<MapPainter> {
                   [DeviceOrientation.landscapeRight]);
         }),
         child: !isFullscreen
-            ? const Icon(Icons.open_in_full_rounded)
-            : const Icon(Icons.close_fullscreen_rounded),
+            ? Icon(
+                Icons.open_in_full_rounded,
+                color: Colors.grey[700],
+              )
+            : Icon(
+                Icons.close_fullscreen_rounded,
+                color: Colors.grey[700],
+              ),
       ),
       body: Stack(
         children: [
@@ -105,59 +113,121 @@ class _MapPainterState extends State<MapPainter> {
             future: futureInit,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(8.0),
-                  width: screenSize.width,
-                  height: screenSize.height,
-                  child: FittedBox(
-                    fit: BoxFit.cover,
-                    child: SizedBox(
-                      width: image.width.toDouble(),
-                      height: image.height.toDouble(),
-                      child: BlurredImage(
-                        imageBytes: imageBytes,
-                        child: MapBorder(
-                          child: MoveMapGesture(
-                            child: CanvasTouchDetector(
-                              gesturesToOverride: const [GestureType.onTapDown],
-                              builder: (context) {
-                                return CustomPaint(
-                                  painter: MapCanvas(
-                                    context,
-                                    image,
-                                    controller,
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                return OrientationBuilder(
+                  builder: ((context, orientation) {
+                    return orientation == Orientation.portrait
+                        ? portrait()
+                        : testAB
+                            ? landscape()
+                            : portrait();
+                  }),
                 );
               }
-
               return const Center(child: CircularProgressIndicator());
             },
           ),
           SafeArea(
             child: Align(
-              alignment: Alignment.topLeft,
+              alignment:
+                  isFullscreen ? Alignment.topRight : Alignment.bottomLeft,
               child: coordinateCount > 1
                   ? null
-                  : IconButton(
-                      onPressed: () {
-                        var id = coordinateCount > 0 ? 'Random' : 'Você';
-                        addNewCoordinate(id);
-                        setState(() => coordinateCount++);
-                      },
-                      icon: const Icon(Icons.add_box),
+                  : Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: IconButton(
+                        onPressed: () {
+                          var id = coordinateCount > 0 ? 'Random' : 'Você';
+                          addNewCoordinate(id);
+                          setState(() => coordinateCount++);
+                        },
+                        icon: const Icon(
+                          Icons.add_box,
+                          size: 32,
+                        ),
+                      ),
                     ),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget portrait() {
+    final screenSize = MediaQuery.of(context).size;
+
+    return Container(
+      alignment: Alignment.center,
+      padding: const EdgeInsets.all(8.0),
+      width: screenSize.width,
+      height: screenSize.height,
+      child: FittedBox(
+        fit: BoxFit.cover,
+        child: SizedBox(
+          width: image.width.toDouble(),
+          height: image.height.toDouble(),
+          child: BlurredImage(
+            imageBytes: imageBytes,
+            child: MapBorder(
+              child: MoveMapGesture(
+                child: CanvasTouchDetector(
+                  gesturesToOverride: const [GestureType.onTapDown],
+                  builder: (context) {
+                    return CustomPaint(
+                      painter: MapCanvas(
+                        context,
+                        image,
+                        controller,
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget landscape() {
+    final screenSize = MediaQuery.of(context).size;
+
+    return SizedBox(
+      // padding: const EdgeInsets.all(8.0),
+      width: screenSize.width,
+      child: MapBorder(
+        width: 8.0,
+        padding: EdgeInsets.zero,
+        child: ClipRRect(
+          child: FittedBox(
+            fit: BoxFit.cover,
+            child: SizedBox(
+              width: image.width.toDouble(),
+              height: image.height.toDouble(),
+              child: BlurredImage(
+                imageBytes: imageBytes,
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: MoveMapGesture(
+                    child: CanvasTouchDetector(
+                      gesturesToOverride: const [GestureType.onTapDown],
+                      builder: (context) {
+                        return CustomPaint(
+                          painter: MapCanvas(
+                            context,
+                            image,
+                            controller,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
