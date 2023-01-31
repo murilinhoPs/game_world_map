@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'model.dart';
+import '../model.dart';
 
 Future<void> showAlertDialog(Location location, BuildContext context) async {
   return showDialog<void>(
