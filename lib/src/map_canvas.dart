@@ -3,8 +3,8 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:touchable/touchable.dart';
 
-import 'location_info_dialog.dart';
 import 'map_painter_controller.dart';
+import 'widgets/location_info_dialog.dart';
 
 class MapCanvas extends CustomPainter {
   final BuildContext context;
