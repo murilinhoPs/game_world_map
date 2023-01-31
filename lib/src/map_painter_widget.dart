@@ -147,7 +147,7 @@ class _MapPainterState extends State<MapPainter> {
                     ),
             ),
           ),
-          debugButton(),
+          // debugButton(),
         ],
       ),
     );
