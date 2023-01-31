@@ -13,8 +13,6 @@ import 'widgets/blurred_image.dart';
 import 'widgets/map_border.dart';
 import 'widgets/move_map_gesture.dart';
 
-const testAB = true;
-
 class MapPainter extends StatefulWidget {
   final String imagePath;
   final String mapJsonPath;
@@ -31,6 +29,7 @@ class MapPainter extends StatefulWidget {
 class _MapPainterState extends State<MapPainter> {
   int coordinateCount = 0;
   bool isFullscreen = false;
+  bool testAB = false;
   late ui.Image image;
   late Uint8List imageBytes;
   late MapCoordinates mapCoordinates;
@@ -148,6 +147,7 @@ class _MapPainterState extends State<MapPainter> {
                     ),
             ),
           ),
+          debugButton(),
         ],
       ),
     );
@@ -225,6 +225,24 @@ class _MapPainterState extends State<MapPainter> {
                   ),
                 ),
               ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget debugButton() {
+    return SafeArea(
+      child: Align(
+        alignment: Alignment.topLeft,
+        child: Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: IconButton(
+            onPressed: () => setState(() => testAB = !testAB),
+            icon: const Icon(
+              Icons.bug_report,
+              size: 32,
             ),
           ),
         ),
