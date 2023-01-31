@@ -89,7 +89,6 @@ class _MapPainterState extends State<MapPainter> {
       floatingActionButton: FloatingActionButton(
         onPressed: () => setState(() {
           isFullscreen = !isFullscreen;
-
           !isFullscreen
               ? SystemChrome.setPreferredOrientations(
                   [DeviceOrientation.portraitUp])
@@ -103,47 +102,46 @@ class _MapPainterState extends State<MapPainter> {
       body: Stack(
         children: [
           FutureBuilder(
-              future: futureInit,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.all(8.0),
-                    width: screenSize.width,
-                    height: screenSize.height,
-                    child: FittedBox(
-                      fit: BoxFit.cover,
-                      child: SizedBox(
-                        width: image.width.toDouble(),
-                        height: image.height.toDouble(),
-                        child: BlurredImage(
-                          imageBytes: imageBytes,
-                          child: MapBorder(
-                            child: MoveMapGesture(
-                              child: CanvasTouchDetector(
-                                gesturesToOverride: const [
-                                  GestureType.onTapDown
-                                ],
-                                builder: (context) {
-                                  return CustomPaint(
-                                    painter: MapCanvas(
-                                      context,
-                                      image,
-                                      controller,
-                                    ),
-                                  );
-                                },
-                              ),
+            future: futureInit,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(8.0),
+                  width: screenSize.width,
+                  height: screenSize.height,
+                  child: FittedBox(
+                    fit: BoxFit.cover,
+                    child: SizedBox(
+                      width: image.width.toDouble(),
+                      height: image.height.toDouble(),
+                      child: BlurredImage(
+                        imageBytes: imageBytes,
+                        child: MapBorder(
+                          child: MoveMapGesture(
+                            child: CanvasTouchDetector(
+                              gesturesToOverride: const [GestureType.onTapDown],
+                              builder: (context) {
+                                return CustomPaint(
+                                  painter: MapCanvas(
+                                    context,
+                                    image,
+                                    controller,
+                                  ),
+                                );
+                              },
                             ),
                           ),
                         ),
                       ),
                     ),
-                  );
-                }
+                  ),
+                );
+              }
 
-                return const Center(child: CircularProgressIndicator());
-              }),
+              return const Center(child: CircularProgressIndicator());
+            },
+          ),
           SafeArea(
             child: Align(
               alignment: Alignment.topLeft,
