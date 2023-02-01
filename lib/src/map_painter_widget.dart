@@ -18,10 +18,12 @@ import 'widgets/move_map_gesture.dart';
 class MapPainter extends StatefulWidget {
   final String imagePath;
   final String mapJsonPath;
+  final String Function(String id)? add;
   const MapPainter({
     Key? key,
     required this.imagePath,
     required this.mapJsonPath,
+    this.add,
   }) : super(key: key);
 
   @override
@@ -76,7 +78,7 @@ class _MapPainterState extends State<MapPainter> {
       }
       return correctLocation;
     }).show = true;
-  }
+  } //TODO: controller publico
 
   @override
   void initState() {
@@ -97,6 +99,14 @@ class _MapPainterState extends State<MapPainter> {
                   [DeviceOrientation.portraitUp])
               : SystemChrome.setPreferredOrientations(
                   [DeviceOrientation.landscapeRight]);
+
+          Future.delayed(const Duration(milliseconds: 300))
+              .then((_) => SystemChrome.setPreferredOrientations([
+                    DeviceOrientation.landscapeLeft,
+                    DeviceOrientation.landscapeRight,
+                    DeviceOrientation.portraitDown,
+                    DeviceOrientation.portraitUp,
+                  ]));
         }),
         child: !isFullscreen
             ? Icon(
@@ -200,6 +210,7 @@ class _MapPainterState extends State<MapPainter> {
       child: SizedBox(
         width: screenSize.width,
         child: MapBorder(
+          radius: 44.0,
           width: 8.0,
           padding: EdgeInsets.zero,
           child: MoveMapGesture(
