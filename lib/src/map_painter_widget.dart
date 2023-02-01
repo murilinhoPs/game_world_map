@@ -99,14 +99,6 @@ class _MapPainterState extends State<MapPainter> {
                   [DeviceOrientation.portraitUp])
               : SystemChrome.setPreferredOrientations(
                   [DeviceOrientation.landscapeRight]);
-
-          Future.delayed(const Duration(milliseconds: 300))
-              .then((_) => SystemChrome.setPreferredOrientations([
-                    DeviceOrientation.landscapeLeft,
-                    DeviceOrientation.landscapeRight,
-                    DeviceOrientation.portraitDown,
-                    DeviceOrientation.portraitUp,
-                  ]));
         }),
         child: !isFullscreen
             ? Icon(
