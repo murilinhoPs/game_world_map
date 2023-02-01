@@ -13,6 +13,8 @@ import 'widgets/blurred_image.dart';
 import 'widgets/map_border.dart';
 import 'widgets/move_map_gesture.dart';
 
+//TODO: remover coordinateCount e testAB states, apagar o debug button também
+
 class MapPainter extends StatefulWidget {
   final String imagePath;
   final String mapJsonPath;
