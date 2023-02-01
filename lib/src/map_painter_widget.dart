@@ -147,7 +147,7 @@ class _MapPainterState extends State<MapPainter> {
                     ),
             ),
           ),
-          // debugButton(),
+          debugButton(),
         ],
       ),
     );
@@ -193,35 +193,32 @@ class _MapPainterState extends State<MapPainter> {
   Widget landscape() {
     final screenSize = MediaQuery.of(context).size;
 
-    return SizedBox(
-      // padding: const EdgeInsets.all(8.0),
-      width: screenSize.width,
-      child: MapBorder(
-        width: 8.0,
-        padding: EdgeInsets.zero,
-        child: ClipRRect(
-          child: FittedBox(
-            fit: BoxFit.cover,
-            child: SizedBox(
-              width: image.width.toDouble(),
-              height: image.height.toDouble(),
-              child: BlurredImage(
-                imageBytes: imageBytes,
+    return BlurredImage(
+      imageBytes: imageBytes,
+      child: SizedBox(
+        width: screenSize.width,
+        child: MapBorder(
+          width: 8.0,
+          padding: EdgeInsets.zero,
+          child: MoveMapGesture(
+            child: FittedBox(
+              fit: BoxFit.contain,
+              child: SizedBox(
+                width: image.width.toDouble(),
+                height: image.height.toDouble(),
                 child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: MoveMapGesture(
-                    child: CanvasTouchDetector(
-                      gesturesToOverride: const [GestureType.onTapDown],
-                      builder: (context) {
-                        return CustomPaint(
-                          painter: MapCanvas(
-                            context,
-                            image,
-                            controller,
-                          ),
-                        );
-                      },
-                    ),
+                  padding: const EdgeInsets.all(18.2),
+                  child: CanvasTouchDetector(
+                    gesturesToOverride: const [GestureType.onTapDown],
+                    builder: (context) {
+                      return CustomPaint(
+                        painter: MapCanvas(
+                          context,
+                          image,
+                          controller,
+                        ),
+                      );
+                    },
                   ),
                 ),
               ),
