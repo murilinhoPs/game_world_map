@@ -8,14 +8,16 @@
             "description": "Pouco para se ver, mas muitos barulhos estranhos...",
             "x": 1707.2,
             "y": 623.8,
+            "icon": "1",
             "show": true
         },
         {
             "id": "2",
             "name": "Observatório",
             "description": "Da pra ver o topo das Montanhas daqui!",
-            "x": 1045.0,
-            "y": 856.0,
+            "x": 1049.0,
+            "y": 864.0,
+            "icon": "3",
             "show": true
         },
         {
@@ -23,7 +25,8 @@
             "name": "Caverna",
             "description": "Escuro demais, mas a curiosidade pode recompensar... ou nao",
             "x": 2138.0,
-            "y": 498.0,
+            "y": 509.0,
+            "icon": "3",
             "show": true
         },
         {
@@ -32,6 +35,7 @@
             "description": "Eles sao sinistros, nao tem mais o que dizer",
             "x": 805.0,
             "y": 829.0,
+            "icon": "4",
             "show": true
         },
         {
@@ -40,6 +44,7 @@
             "description": "Geladas, mas pelo menos tem uma bela vista!",
             "x": 647.0,
             "y": 407.0,
+            "icon": "5",
             "show": true
         },
         {
@@ -48,23 +53,26 @@
             "description": "Da pra encher o Cantil aqui, só cuidado com os jacarés",
             "x": 485,
             "y": 1018,
+            "icon": "6",
             "show": true
         },
         {
             "id": "Você",
             "name": "Sua localização",
-            "description": "É onde fica seu acampamento",
-            "x": 1429,
-            "y": 117,
-            "show": false
+            "description": "É onde fica seu acampamento provisório",
+            "x": 1434,
+            "y": 110,
+            "icon": "7",
+            "show": true
         },
         {
-            "id": "Random",
-            "name": "Random place",
-            "description": "hdsufuhdasifdhifhaifd",
-            "x": 1100,
-            "y": 567,
-            "show": false
+            "id": "Camp",
+            "name": "Acampamento Raccon's Site",
+            "description": "É onde fica o acampamento que você trabalha",
+            "x": 1839,
+            "y": 1278,
+            "icon": "8",
+            "show": true
         }
     ]
 }

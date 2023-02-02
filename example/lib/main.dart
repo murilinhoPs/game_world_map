@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:game_world_map/game_world_map.dart';
 
 void main() {
@@ -32,11 +36,40 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late Future futureInit;
+  late List<String>? iconsImagePaths;
+
+  Future _initImages() async {
+    final manifestContent = await rootBundle.loadString('AssetManifest.json');
+    final manifestMap = json.decode(manifestContent);
+
+    final imagePaths =
+        manifestMap.keys.where((String key) => key.contains('.png')).toList();
+    iconsImagePaths = imagePaths;
+    return iconsImagePaths;
+  }
+
+  @override
+  void initState() {
+    futureInit = _initImages();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const MapPainter(
-      imagePath: '$mapPath.jpg',
-      mapJsonPath: '$mapPath.json',
-    );
+    return FutureBuilder(
+        future: futureInit,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return MapPainter(
+              imagePath: '$mapPath.jpg',
+              mapJsonPath: '$mapPath.json',
+              iconsPaths: iconsImagePaths,
+              locationToAdd: 'Random',
+            );
+          }
+
+          return const Center(child: CircularProgressIndicator());
+        });
   }
 }

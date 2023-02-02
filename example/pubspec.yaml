@@ -29,6 +29,7 @@ flutter:
   assets:
     - assets/mapa.jpg
     - assets/mapa.json
+    - assets/icons/
   # fonts:
   #   - family: Schyler
   #     fonts:
