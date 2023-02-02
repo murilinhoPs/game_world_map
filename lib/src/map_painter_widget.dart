@@ -13,8 +13,6 @@ import 'widgets/blurred_image.dart';
 import 'widgets/map_border.dart';
 import 'widgets/move_map_gesture.dart';
 
-//TODO: remover coordinateCount e testAB states, apagar o debug button também
-
 class MapPainter extends StatefulWidget {
   final String imagePath;
   final String mapJsonPath;
@@ -34,7 +32,6 @@ class MapPainter extends StatefulWidget {
 
 class _MapPainterState extends State<MapPainter> {
   bool isFullscreen = false;
-  bool testAB = false;
   late Map<String, ui.Image> icons;
   late ui.Image mapImage;
   late Uint8List imageBytes;
@@ -130,27 +127,20 @@ class _MapPainterState extends State<MapPainter> {
                 color: Colors.grey[700],
               ),
       ),
-      body: Stack(
-        children: [
-          FutureBuilder(
-            future: futureInit,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return OrientationBuilder(
-                  builder: ((context, orientation) {
-                    return orientation == Orientation.portrait
-                        ? portrait()
-                        : testAB
-                            ? landscape()
-                            : portrait();
-                  }),
-                );
-              }
-              return const Center(child: CircularProgressIndicator());
-            },
-          ),
-          debugButton(),
-        ],
+      body: FutureBuilder(
+        future: futureInit,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return OrientationBuilder(
+              builder: ((context, orientation) {
+                return orientation == Orientation.portrait
+                    ? portrait()
+                    : landscape();
+              }),
+            );
+          }
+          return const Center(child: CircularProgressIndicator());
+        },
       ),
     );
   }
@@ -227,24 +217,6 @@ class _MapPainterState extends State<MapPainter> {
                   ),
                 ),
               ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget debugButton() {
-    return SafeArea(
-      child: Align(
-        alignment: Alignment.topLeft,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 8.0),
-          child: IconButton(
-            onPressed: () => setState(() => testAB = !testAB),
-            icon: const Icon(
-              Icons.bug_report,
-              size: 32,
             ),
           ),
         ),

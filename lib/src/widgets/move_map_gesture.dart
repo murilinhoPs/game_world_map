@@ -11,7 +11,7 @@ class MoveMapGesture extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InteractiveViewer(
-      boundaryMargin: const EdgeInsets.fromLTRB(200, 280, 200, 280),
+      boundaryMargin: const EdgeInsets.fromLTRB(240, 160, 240, 160),
       minScale: 0.01,
       maxScale: 2.0,
       child: child,
