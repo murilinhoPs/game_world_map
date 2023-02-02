@@ -40,7 +40,7 @@ class MapCanvas extends CustomPainter {
   void drawCoordinate(TouchyCanvas canvas, Size size) {
     var imagePaint = Paint()
       ..color = Colors.transparent
-      ..style = PaintingStyle.stroke;
+      ..style = PaintingStyle.fill;
 
     for (var index = 0; index < controller.locations!.length; index++) {
       var coordinate = controller.locations![index];
