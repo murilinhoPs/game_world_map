@@ -32,6 +32,7 @@ class MapCoordinates {
 class Location {
   late String name;
   late String id;
+  late String icon;
   late String description;
   late double x;
   late double y;
@@ -40,6 +41,7 @@ class Location {
   Location({
     required this.id,
     required this.name,
+    required this.icon,
     required this.description,
     required this.x,
     required this.y,
@@ -49,6 +51,7 @@ class Location {
   Location.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    icon = json['icon'];
     description = json['description'];
     show = json['show'];
     x = json['x'] is int ? (json['x'] as int).toDouble() : json['x'];
@@ -59,6 +62,7 @@ class Location {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['name'] = name;
+    data['icon'] = icon;
     data['description'] = description;
     data['y'] = y;
     data['x'] = x;
