@@ -8,11 +8,13 @@ import 'widgets/location_info_dialog.dart';
 
 class MapCanvas extends CustomPainter {
   final BuildContext context;
-  final ui.Image image;
+  final ui.Image mapImage;
+  final Map<String, ui.Image> icons;
   final MapPainterController controller;
   const MapCanvas(
     this.context,
-    this.image,
+    this.mapImage,
+    this.icons,
     this.controller,
   );
 
@@ -28,7 +30,7 @@ class MapCanvas extends CustomPainter {
     final paint = Paint();
 
     canvas.drawImage(
-      image,
+      mapImage,
       Offset.zero,
       paint,
       onTapDown: (details) => print('ImageTap: ${details.localPosition}'),
@@ -36,23 +38,29 @@ class MapCanvas extends CustomPainter {
   }
 
   void drawCoordinate(TouchyCanvas canvas, Size size) {
-    var paint1 = Paint()
-      ..color = const Color.fromARGB(148, 170, 68, 170)
-      ..style = PaintingStyle.fill;
+    var imagePaint = Paint()
+      ..color = Colors.transparent
+      ..style = PaintingStyle.stroke;
 
-    for (var coordinate in controller.locations!) {
+    for (var index = 0; index < controller.locations!.length; index++) {
+      var coordinate = controller.locations![index];
+
       if (coordinate.show) {
-        canvas.drawCircle(
-            Offset(
-              coordinate.x,
-              coordinate.y,
-            ),
-            50,
-            paint1, onTapDown: (details) {
-          print(
-              'Tap ${coordinate.name} (${coordinate.id}): ${details.localPosition}');
-          showAlertDialog(coordinate, context);
-        });
+        var iconImage = icons[coordinate.icon]!;
+
+        canvas.drawImage(
+          iconImage,
+          Offset(
+            coordinate.x - iconImage.width / 2,
+            coordinate.y - iconImage.width / 2,
+          ),
+          imagePaint,
+          onTapDown: (details) {
+            print(
+                'Tap ${coordinate.name} (${coordinate.id}): ${details.localPosition}');
+            showAlertDialog(coordinate, context);
+          },
+        );
       }
     }
   }

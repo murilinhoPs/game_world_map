@@ -18,12 +18,14 @@ import 'widgets/move_map_gesture.dart';
 class MapPainter extends StatefulWidget {
   final String imagePath;
   final String mapJsonPath;
-  final String Function(String id)? add;
+  final List<String>? iconsPaths;
+  final String locationToAdd;
   const MapPainter({
     Key? key,
     required this.imagePath,
     required this.mapJsonPath,
-    this.add,
+    required this.locationToAdd,
+    this.iconsPaths,
   }) : super(key: key);
 
   @override
@@ -31,10 +33,10 @@ class MapPainter extends StatefulWidget {
 }
 
 class _MapPainterState extends State<MapPainter> {
-  int coordinateCount = 0;
   bool isFullscreen = false;
   bool testAB = false;
-  late ui.Image image;
+  late Map<String, ui.Image> icons;
+  late ui.Image mapImage;
   late Uint8List imageBytes;
   late MapCoordinates mapCoordinates;
   late Future futureInit;
@@ -47,8 +49,24 @@ class _MapPainterState extends State<MapPainter> {
 
     setState(() {
       imageBytes = bytes;
-      this.image = image;
+      mapImage = image;
     });
+  }
+
+  Future loadIconsImage(List<String> paths) async {
+    icons = {};
+
+    for (var iconPath in paths) {
+      final data = await rootBundle.load(iconPath);
+      final bytes = data.buffer.asUint8List();
+      final image = await decodeImageFromList(bytes);
+      final iconName =
+          iconPath.replaceAll(('assets/icons/'), '').replaceAll('.png', '');
+
+      setState(() {
+        icons.addAll({iconName: image});
+      });
+    }
   }
 
   Future loadJson(String path) async {
@@ -66,11 +84,13 @@ class _MapPainterState extends State<MapPainter> {
   Future<List> initialize() async {
     final mapImage = await loadImage(widget.imagePath);
     final mapJson = await loadJson(widget.mapJsonPath);
+    final icons = await loadIconsImage(widget.iconsPaths!);
 
-    return [mapImage, mapJson];
+    return [mapImage, mapJson, icons];
   }
 
-  void addNewCoordinate(String id) {
+  void addNewCoordinate() {
+    final id = widget.locationToAdd;
     mapCoordinates.locations.firstWhere((element) {
       final correctLocation = element.id == id;
       if (correctLocation) {
@@ -78,7 +98,7 @@ class _MapPainterState extends State<MapPainter> {
       }
       return correctLocation;
     }).show = true;
-  } //TODO: controller publico
+  }
 
   @override
   void initState() {
@@ -129,28 +149,6 @@ class _MapPainterState extends State<MapPainter> {
               return const Center(child: CircularProgressIndicator());
             },
           ),
-          SafeArea(
-            child: Align(
-              alignment:
-                  isFullscreen ? Alignment.topRight : Alignment.bottomLeft,
-              child: coordinateCount > 1
-                  ? null
-                  : Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: IconButton(
-                        onPressed: () {
-                          var id = coordinateCount > 0 ? 'Random' : 'Você';
-                          addNewCoordinate(id);
-                          setState(() => coordinateCount++);
-                        },
-                        icon: const Icon(
-                          Icons.add_box,
-                          size: 32,
-                        ),
-                      ),
-                    ),
-            ),
-          ),
           debugButton(),
         ],
       ),
@@ -168,8 +166,8 @@ class _MapPainterState extends State<MapPainter> {
       child: FittedBox(
         fit: BoxFit.cover,
         child: SizedBox(
-          width: image.width.toDouble(),
-          height: image.height.toDouble(),
+          width: mapImage.width.toDouble(),
+          height: mapImage.height.toDouble(),
           child: BlurredImage(
             imageBytes: imageBytes,
             child: MapBorder(
@@ -180,7 +178,8 @@ class _MapPainterState extends State<MapPainter> {
                     return CustomPaint(
                       painter: MapCanvas(
                         context,
-                        image,
+                        mapImage,
+                        icons,
                         controller,
                       ),
                     );
@@ -209,8 +208,8 @@ class _MapPainterState extends State<MapPainter> {
             child: FittedBox(
               fit: BoxFit.contain,
               child: SizedBox(
-                width: image.width.toDouble(),
-                height: image.height.toDouble(),
+                width: mapImage.width.toDouble(),
+                height: mapImage.height.toDouble(),
                 child: Padding(
                   padding: const EdgeInsets.all(18.2),
                   child: CanvasTouchDetector(
@@ -219,7 +218,8 @@ class _MapPainterState extends State<MapPainter> {
                       return CustomPaint(
                         painter: MapCanvas(
                           context,
-                          image,
+                          mapImage,
+                          icons,
                           controller,
                         ),
                       );
