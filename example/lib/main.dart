@@ -58,18 +58,19 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: futureInit,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return MapPainter(
-              imagePath: '$mapPath.jpg',
-              mapJsonPath: '$mapPath.json',
-              iconsPaths: iconsImagePaths,
-              locationToAdd: 'Random',
-            );
-          }
+      future: futureInit,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return MapPainter(
+            imagePath: '$mapPath.jpg',
+            mapJsonPath: '$mapPath.json',
+            iconsPaths: iconsImagePaths,
+            locationToAdd: 'Random',
+          );
+        }
 
-          return const Center(child: CircularProgressIndicator());
-        });
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
   }
 }
