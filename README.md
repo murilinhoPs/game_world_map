@@ -25,7 +25,7 @@ Use this plugin in your Flutter game 👀 or app to:
 - Use the map in fullscreen
 - Touch the places that are marked and see more info about them
   
-<img src="assets/miniMapDemo.gif" style="max-width: 700px" />
+<img src="assets/miniMapDemo.gif" style="width: 300px" />
     
     you can customize the style (buttons, background...) 
     I prefer a dark background and green buttons
