@@ -27,7 +27,7 @@ Use this plugin in your Flutter game 👀 or app to:
   
 <img src="assets/miniMapDemo.gif" style="width: 300px" />
     
-    you can customize the style (buttons, background...) 
+   > you can customize the style (buttons, background...) 
     I prefer a dark background and green buttons
 
 ## Getting started
