@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-const String mapPath = 'assets/mapa';
+const String mapPath = 'assets/mapa/';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -62,8 +62,8 @@ class _MyHomePageState extends State<MyHomePage> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return MapPainter(
-            imagePath: '$mapPath.jpg',
-            mapJsonPath: '$mapPath.json',
+            mapBackgroundPath: mapPath,
+            mapJsonPath: '$mapPath/mapa.json',
             iconsPaths: iconsImagePaths,
             locationToAdd: 'Random',
           );

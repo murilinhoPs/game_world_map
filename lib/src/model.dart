@@ -1,6 +1,7 @@
 class MapCoordinates {
   String? name;
   late int id;
+  late String background;
   late List<Location> locations;
 
   MapCoordinates({
@@ -12,6 +13,7 @@ class MapCoordinates {
   MapCoordinates.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    background = json['background'];
     if (json['locations'] != null) {
       locations = <Location>[];
       json['locations'].forEach((v) {
@@ -24,6 +26,7 @@ class MapCoordinates {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['name'] = name;
+    data['background'] = background;
     data['locations'] = locations.map((v) => v.toJson()).toList();
     return data;
   }

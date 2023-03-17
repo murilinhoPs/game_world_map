@@ -14,13 +14,13 @@ import 'widgets/map_border.dart';
 import 'widgets/move_map_gesture.dart';
 
 class MapPainter extends StatefulWidget {
-  final String imagePath;
+  final String mapBackgroundPath;
   final String mapJsonPath;
   final List<String>? iconsPaths;
   final String locationToAdd;
   const MapPainter({
     Key? key,
-    required this.imagePath,
+    required this.mapBackgroundPath,
     required this.mapJsonPath,
     required this.locationToAdd,
     this.iconsPaths,
@@ -79,8 +79,8 @@ class _MapPainterState extends State<MapPainter> {
   }
 
   Future<List> initialize() async {
-    final mapImage = await loadImage(widget.imagePath);
     final mapJson = await loadJson(widget.mapJsonPath);
+    final mapImage = await loadImage('${widget.mapBackgroundPath}/mapa.jpg');
     final icons = await loadIconsImage(widget.iconsPaths!);
 
     return [mapImage, mapJson, icons];
