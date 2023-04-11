@@ -7,7 +7,7 @@
             "id": "1",
             "name": "Mata Densa",
             "description": "Pouco para se ver, mas muitos barulhos estranhos...",
-            "x": 1707.2,
+            "x": 1709.2,
             "y": 623.8,
             "icon": "1",
             "show": true
@@ -16,17 +16,17 @@
             "id": "2",
             "name": "Observatório",
             "description": "Da pra ver o topo das Montanhas daqui!",
-            "x": 1049.0,
-            "y": 864.0,
-            "icon": "3",
+            "x": 1042.0,
+            "y": 862.0,
+            "icon": "2",
             "show": true
         },
         {
             "id": "3",
             "name": "Caverna",
             "description": "Escuro demais, mas a curiosidade pode recompensar... ou nao",
-            "x": 2138.0,
-            "y": 509.0,
+            "x": 2134.0,
+            "y": 512.0,
             "icon": "3",
             "show": true
         },
@@ -34,8 +34,8 @@
             "id": "4",
             "name": "Chalés Sinistros",
             "description": "Eles sao sinistros, nao tem mais o que dizer",
-            "x": 805.0,
-            "y": 829.0,
+            "x": 810.0,
+            "y": 832.0,
             "icon": "4",
             "show": true
         },
@@ -43,8 +43,8 @@
             "id": "5",
             "name": "Montanhas",
             "description": "Geladas, mas pelo menos tem uma bela vista!",
-            "x": 647.0,
-            "y": 407.0,
+            "x": 652.0,
+            "y": 410.0,
             "icon": "5",
             "show": true
         },
@@ -61,8 +61,8 @@
             "id": "Você",
             "name": "Sua localização",
             "description": "É onde fica seu acampamento provisório",
-            "x": 1434,
-            "y": 110,
+            "x": 1436,
+            "y": 105,
             "icon": "7",
             "show": true
         },
@@ -71,7 +71,7 @@
             "name": "Acampamento Raccon's Site",
             "description": "É onde fica o acampamento que você trabalha",
             "x": 1839,
-            "y": 1278,
+            "y": 1280,
             "icon": "8",
             "show": true
         }

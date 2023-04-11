@@ -13,7 +13,7 @@ class MoveMapGesture extends StatelessWidget {
     return InteractiveViewer(
       boundaryMargin: const EdgeInsets.fromLTRB(240, 160, 240, 160),
       minScale: 0.01,
-      maxScale: 2.0,
+      maxScale: 2.8,
       child: child,
     );
   }

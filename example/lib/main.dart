@@ -65,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
             mapBackgroundPath: mapPath,
             mapJsonPath: '$mapPath/mapa.json',
             iconsPaths: iconsImagePaths,
-            locationToAdd: 'Random',
+            locationToAdd: 'Camp',
           );
         }
 

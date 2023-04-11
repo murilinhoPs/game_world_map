@@ -40,6 +40,7 @@ class _MapPainterState extends State<MapPainter> {
   final MapPainterController controller = MapPainterController();
 
   Future loadImage(String path) async {
+    //TODO: load mapImage
     final data = await rootBundle.load(path);
     final bytes = data.buffer.asUint8List();
     final image = await decodeImageFromList(bytes);
@@ -51,6 +52,7 @@ class _MapPainterState extends State<MapPainter> {
   }
 
   Future loadIconsImage(List<String> paths) async {
+    //TODO: initIcons
     icons = {};
 
     for (var iconPath in paths) {
@@ -67,6 +69,7 @@ class _MapPainterState extends State<MapPainter> {
   }
 
   Future loadJson(String path) async {
+    //TODO: init mapData
     final jsonProduct = await rootBundle.loadString(path);
     final jsonResponse = json.decode(jsonProduct);
     final mapCoordinates = MapCoordinates.fromJson(jsonResponse);
@@ -87,6 +90,7 @@ class _MapPainterState extends State<MapPainter> {
   }
 
   void addNewCoordinate() {
+    //TODO: export this function
     final id = widget.locationToAdd;
     mapCoordinates.locations.firstWhere((element) {
       final correctLocation = element.id == id;
