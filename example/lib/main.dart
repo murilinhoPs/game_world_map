@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
-const String mapPath = 'assets/mapa/';
+const String mapPath = 'assets/mapa';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
