@@ -1,3 +1,3 @@
 library game_world_map;
 
-export 'src/map_painter_widget.dart';
+export 'src/map_widget.dart';

@@ -32,10 +32,23 @@ Use this plugin in your Flutter game 👀 or app to:
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+#### Init the package
+- In your main app pass the mapPath prop and the location
+  ###
+  
+  > Obs: locationToAdd might be add dinamically from a game logic, I put hard coded as an example
 
-## Usage
+```dart
+  @override
+  Widget build(BuildContext context) {
+    return const MapWidget(
+        mapPath: mapPath,
+        locationToAdd: addLocation, // dyanmic
+      );
+  }
+```
+
+## How it Works
 
 #### Initialize map image and it's icons
 - You need to create the code below to pass the paths for the map read (***Render the map section***)
@@ -62,6 +75,7 @@ start using the package.
 - Just pass the props (image and iconsPath) to the MapPainter widget and you're ready! 
   Obs: locationToAdd might be add dinamically from a game logic, I put hard coded as an example
   ###
+  
   > In this example I'm using a FutureBuilder to get the data and pass to the widget because it's easier to explain, but you can use a state-management or anything you want!
 
 ```dart
